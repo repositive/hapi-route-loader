@@ -5,7 +5,7 @@ Load hapi routes into the hapi router from a folder
 
 **How to use**
 
-First define your routes in any folder you like. Your routes must complain with the route schema definition:
+First define your routes in any folder you like. Your route module must complain with the route schema definition for the module to be loaded:
 
 ```ts
 export interface RouteConfiguration {
@@ -17,7 +17,21 @@ export interface RouteConfiguration {
 }
 ```
 
-Initialize it as a hapi plugin:
+An example of a route:
+
+```ts
+/* /src/routes/hello.ts */
+
+export const method = 'get';
+export const path = '/';
+
+export function handler(req: any, rep: any) {
+  rep('Hello World');
+}
+```
+
+
+Then load your routes with the plugin:
 
 ```ts
 import { Server } from 'hapi';
