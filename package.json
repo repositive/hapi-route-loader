@@ -3,6 +3,7 @@
   "version": "0.0.4",
   "description": "Load hapi routes into the hapi router from a folder",
   "main": "dist/main/index.js",
+  "types": "dist/main/index.d.ts",
   "scripts": {
     "prepush": "npm run test && npm run coverage",
     "precommit": "npm run lint",
