@@ -1,6 +1,6 @@
 {
   "name": "@repositive/hapi-route-loader",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Load hapi routes into the hapi router from a folder",
   "main": "dist/main/index.js",
   "types": "dist/main/index.d.ts",
