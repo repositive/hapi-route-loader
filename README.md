@@ -5,7 +5,7 @@ Load hapi routes into the hapi router from a folder
 
 **How to use**
 
-First define your routes in any folder you like. Your route module must complain with the route schema definition for the module to be loaded:
+First define your routes in any folder you like. Your route module must comply with the route schema definition for the module to be loaded:
 
 ```ts
 export interface RouteConfiguration {
@@ -67,5 +67,5 @@ async function startApi() {
 
 **Notes**
 
-The resitory has git hooks on `precommit` and `prepush`. You need to pass the linting criteria before commit and the test and coverage criteria before push. The test requirements are 80% overall.
+The repository has git hooks on `precommit` and `prepush`. You need to pass the linting criteria before commit and the test and coverage criteria before push. The test requirements are 80% overall.
 
