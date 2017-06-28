@@ -55,10 +55,11 @@ test('Does not load non valid routes', (t: Test) => {
 
 test('Loads routes with multiple methods', (t: Test) => {
 
-  mock('/multiple-methods.js', {
+  const route = {
     path: '/multiple',
     method: ['GET', 'POST']
-  });
+  };
+  mock('/multiple-methods.js', route);
 
   mock('glob', function(str: string, cb: any) {
     return cb(undefined, ['/multiple-methods.js']);
@@ -70,6 +71,7 @@ test('Loads routes with multiple methods', (t: Test) => {
 
   plugin(serverMock, {match: 'dist/main/routes/**/_*.js'}, (err?: Error) => {
     t.equals(serverMock.route.callCount, 1, 'For each valid route call the server');
+    t.deepEquals(serverMock.route.getCall(0).args, [route], 'The server route loader is called with the route');
     t.notOk(err, 'No errors here');
     t.end();
   });

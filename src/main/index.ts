@@ -47,7 +47,7 @@ const routes: any = function(server: Server, { match }: PluginOptions, next: (er
       })
     )
       .then(modules => modules.filter(isRoute))
-      .then(modules => modules.map(server.route));
+      .then(modules => modules.map((r) => server.route(r)));
   }
 
   populate()
