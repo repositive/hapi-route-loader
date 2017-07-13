@@ -3,8 +3,17 @@ import { promisify, all } from 'bluebird';
 import { isAbsolute, join} from 'path';
 import {Server, RouteConfiguration as Route} from 'hapi';
 
-const glob: (s: string, o: any) => Promise<string[]> = <any> promisify(_glob);
-
+function glob({pattern, options}: {pattern: string; options: any}): Promise<string[]> {
+  return new Promise<string[]>((resolve, reject) => {
+    _glob(pattern, options, (err, files) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(files);
+      }
+    });
+  });
+}
 
 export function isRoute(o: any): o is Route {
   const validMethods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'];
@@ -25,7 +34,7 @@ export function isRoute(o: any): o is Route {
 
 export interface PluginOptions {
   match?: string;
-  ignore?: string;
+  globOptions?: string;
 }
 
 export class PluginOptionsError extends Error {
@@ -34,13 +43,13 @@ export class PluginOptionsError extends Error {
   }
 }
 
-const routes: any = function(server: Server, { ignore, match }: PluginOptions, next: (err?: Error) => void) {
+const routes: any = function(server: Server, { globOptions, match }: PluginOptions, next: (err?: Error) => void) {
   async function populate() {
 
     if (!match) {
       return Promise.reject(new PluginOptionsError('The "match" parameter is mandatory for this plugin to run'));
     }
-    const files = await glob(match, {ignore});
+    const files = await glob({ pattern: match, options: globOptions});
     return all(
       files.map((f) => {
         const full_path = isAbsolute(f) ? f : join(__dirname, f);
