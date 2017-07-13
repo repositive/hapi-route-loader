@@ -11,7 +11,7 @@ test('All goes well', (t: Test) => {
     handler: spy()
   });
 
-  mock('glob', function(str: string, cb: any) {
+  mock('glob', function(str: string, o: any, cb: any) {
     return cb(undefined, ['/root.js']);
   });
 
@@ -37,7 +37,7 @@ test('Does not load non valid routes', (t: Test) => {
     handler: false
   });
 
-  mock('glob', function(str: string, cb: any) {
+  mock('glob', function(str: string, o: any, cb: any) {
     return cb(undefined, ['/false.js']);
   });
 
@@ -61,7 +61,7 @@ test('Loads routes with multiple methods', (t: Test) => {
   };
   mock('/multiple-methods.js', route);
 
-  mock('glob', function(str: string, cb: any) {
+  mock('glob', function(str: string, o: any, cb: any) {
     return cb(undefined, ['/multiple-methods.js']);
   });
 
@@ -86,7 +86,7 @@ test('Sever does not like the route', (t: Test) => {
     method: 'GET'
   });
 
-  mock('glob', function(str: string, cb: any) {
+  mock('glob', function(str: string, o: any, cb: any) {
     return cb(undefined, ['/valid.js']);
   });
 
